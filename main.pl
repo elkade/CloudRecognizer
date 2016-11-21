@@ -1,5 +1,6 @@
 cloud(X) :-
 	retractall(known(Y,A)),
+	consult('c:/users/lukas/desktop/magisterka zima/prolog/cloudrecognizer/db.pl'),
 	cloudBuf(X).
 
 :- dynamic known/2.
@@ -18,17 +19,27 @@ ask(A):-
 	asserta(known(Y, A)), % remember it
 	Y == yes. % succeed or fail
 
+save_fact(Cloud,FeaturesList) :-
+	go(["cloudBuf("]),
+	go([Cloud]),
+	go([") :-"]),
+	go2(FeaturesList),
+	go(["!."]).
+
+go([]).
+go([H|T]):-
+	open('c:/users/lukas/desktop/magisterka zima/prolog/cloudrecognizer/db.pl',append,Stream),
+	write(Stream, H),
+	close(Stream),
+	go(T).
 	
 	
-cloudBuf(laysan_albatross):-
-	ask(albatross),
-	ask(white).
-cloudBuf(black_footed_albatross):-
-	ask(albatross),
-	ask(dark).
-cloudBuf(whistling_swan) :-
-	ask(swan),
-	ask(muffled_musical_whistle).
-cloudBuf(trumpeter_swan) :-
-	ask(swan),
-	ask(loud_trumpeting).
+go2([]).
+go2([H|T]):-
+	open('c:/users/lukas/desktop/magisterka zima/prolog/cloudrecognizer/db.pl',append,Stream),
+	write(Stream, 'ask('),
+	write(Stream, H),
+	write(Stream, '),'),
+	nl(Stream),
+	close(Stream),
+	go2(T).

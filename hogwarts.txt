@@ -1,0 +1,4 @@
+cloudBuf(comet) :-ask(heavy),
+ask(briht),
+ask(nice),
+!.
