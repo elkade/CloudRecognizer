@@ -5,41 +5,49 @@ cloud(X) :-
 
 :- dynamic known/2.
 	
-ask(A):-
-	known(yes, A), % succeed if true
-	!. % stop looking
-ask(A):-
-	known(_, A), % fail if false
+ask(A, V):-
+	known(V, A),
+	!.
+ask(A, V):-
+	known(_, A),
 	!,
 	fail.
-ask(A):-
-	write(A), % ask user
+ask(A, V):- 
+	known(V2, A),
+	V \== V2,
+	!,
+	fail.
+ask(A, V):-
+	write(A),
 	write('? : '),
-	read(Y), % get the answer
-	asserta(known(Y, A)), % remember it
-	Y == yes. % succeed or fail
+	read(Y),
+	asserta(known(Y, A)),
+	Y == V.
 
-save_fact(Cloud,FeaturesList) :-
-	go(["cloudBuf("]),
-	go([Cloud]),
-	go([") :-"]),
-	go2(FeaturesList),
-	go(["!."]).
+save_fact(Cloud,FeaturesList, NonFeaturesList) :-
+	writeEx(["\ncloudBuf("]),
+	writeEx([Cloud]),
+	writeEx([") :-"]),
+	writeEx2(FeaturesList, y),
+	writeEx2(NonFeaturesList, n),
+	writeEx(["!."]).
 
-go([]).
-go([H|T]):-
+writeEx([]).
+writeEx([H|T]):-
 	open('c:/users/lukas/desktop/magisterka zima/prolog/cloudrecognizer/db.pl',append,Stream),
 	write(Stream, H),
 	close(Stream),
-	go(T).
+	writeEx(T).
 	
 	
-go2([]).
-go2([H|T]):-
+writeEx2([], A).
+writeEx2([H|T], A):-
 	open('c:/users/lukas/desktop/magisterka zima/prolog/cloudrecognizer/db.pl',append,Stream),
 	write(Stream, 'ask('),
 	write(Stream, H),
+	write(Stream, ', '),
+	write(Stream, A),
 	write(Stream, '),'),
 	nl(Stream),
 	close(Stream),
-	go2(T).
+	writeEx2(T, A).
