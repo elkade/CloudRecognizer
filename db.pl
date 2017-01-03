@@ -28,6 +28,6 @@ cloudBuf(cirrus) :-
 cloudBuf(altocumulus) :-
 	ask(pokrywa_wiekszosc_nieba, y).
 
-
-cloudBuf(tecza) :-ask(jest_kolorowa, y),
+cloudBuf(mgla) :-ask(slaba_widocznosc, y),
+ask(pada_deszcz, n),
 !.

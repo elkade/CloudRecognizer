@@ -1,6 +1,6 @@
 cloud(X) :-
 	retractall(known(Y,A)),
-	consult('c:/users/lukas/desktop/magisterka zima/prolog/cloudrecognizer/db.pl'),
+	consult('db.pl'),
 	cloudBuf(X).
 
 :- dynamic known/2.
@@ -34,7 +34,7 @@ save_fact(Cloud,FeaturesList, NonFeaturesList) :-
 
 writeEx([]).
 writeEx([H|T]):-
-	open('c:/users/lukas/desktop/magisterka zima/prolog/cloudrecognizer/db.pl',append,Stream),
+	open('db.pl',append,Stream),
 	write(Stream, H),
 	close(Stream),
 	writeEx(T).
@@ -42,7 +42,7 @@ writeEx([H|T]):-
 	
 writeEx2([], A).
 writeEx2([H|T], A):-
-	open('c:/users/lukas/desktop/magisterka zima/prolog/cloudrecognizer/db.pl',append,Stream),
+	open('db.pl',append,Stream),
 	write(Stream, 'ask('),
 	write(Stream, H),
 	write(Stream, ', '),
