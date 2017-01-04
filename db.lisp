@@ -1,6 +1,7 @@
 (setq data (list 
+	
+	(list "CUMULONIMBUS" (list "PADA_DESZCZ") (list "ZASLANIA_CALE_NIEBO") )
 	(list "NIMBOSTRATUS" (list "PADA_DESZCZ" "ZASLANIA_CALE_NIEBO") (list) )
-	(list "CUMULONIMBUS" '("PADA_DESZCZ") '("ZASLANIA_CALE_NIEBO") )
 	
 	(list "CUMULUS" (list "JEST_NISKO") (list "PADA_DESZCZ" "ZASLANIA_CALE_NIEBO") )
 	(list "STRATUS" (list "JEST_NISKO" "ZASLANIA_CALE_NIEBO" "JEST_ZWARTA") (list "PADA_DESZCZ") )
