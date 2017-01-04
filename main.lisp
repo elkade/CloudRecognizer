@@ -6,10 +6,8 @@
 
 ;;;(print (factorial 5))
 
-(setq data (list 
-	(list 'nimbostratus 'pada_deszcz T 'zaslania_cale T )
-	(list 'cumulonimbus 'pada_deszcz T 'zaslania_cale Nil )
-))
+(load "db.lisp")
+(princ data)
 ;;;(print (car (car data)))
 
 (setq tree '("pada_deszcz" '("zaslania_cale" '(Nil "nimbostratus") '(Nil "cumulonimbus")) Nil))
@@ -27,3 +25,11 @@
 	)
 )
 (print (test tree))
+
+(defun save_rule ()
+(setq suffix (read))
+(with-open-file
+	(str "db.lisp" :direction :output :if-exists :append)
+	(format str "~%(setq data (append data (list ~%~a~%)))" suffix))
+	)
+(save_rule)
