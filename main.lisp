@@ -1,14 +1,12 @@
-(DEFUN FACTORIAL (N)
-(COND
-((= N 0) 1)
-(T (* N (FACTORIAL (- N 1))))
-))
 
-;;;(print (factorial 5))
+
+(defmacro rule (_name => _listT _listN)
+	`(setq data (append data (list(list ',_name ',_listT ',_listN))))
+)
+
+(setq data (list))
 
 (load "db.lisp")
-(princ data)
-;;;(print (car (car data)))
 
 (defun node-name (node) (car node))
 (defun node-pos (node) (car (cdr node)))
@@ -31,9 +29,7 @@
 		(T (append (list (car _list)) (remove-str _elem (cdr _list))))
 	)
 )
-;(trace remove-str)
 
-;(trace contains)
 (defun add_elem (_node _name _pos _neg)
 	(cond
 		((null _node)
@@ -61,13 +57,7 @@
 	)
 ) 
 
-;(trace make-tree)
-
-;(setq tree (add_elem Nil (node-name (car data)) (node-pos (car data)) (node-neg (car data))))
-;(setq data (cdr data))
-;(princ tree)
 (setq tree (make-tree Nil data))
-;(setq tree (add_elem tree (node-name (car data)) (node-pos (car data)) (node-neg (car data))))
 (princ tree)
 (defun test (node)
 	(cond
@@ -85,8 +75,9 @@
 
 (defun save_rule ()
 (setq suffix (read))
+(print suffix)
 (with-open-file
 	(str "db.lisp" :direction :output :if-exists :append)
-	(format str "~%(setq data (append data (list ~%~a~%)))" suffix))
+	(format str "~%~a~%" suffix))
 	)
-;(save_rule)
+(save_rule)
